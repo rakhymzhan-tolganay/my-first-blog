@@ -1,46 +1,15 @@
-{% load static %} 
+{% extends 'blog/base.html' %}
 
-<html>
-<style>
-.text{
- color: green;
-font-family: 'Tangerine';
-font-size:50px;
-}
-</style>
-
-    <head>
-	<div class page-header>
-        <title>Django Girls blog</title>
-	</div>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-	<link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Tangerine">
-
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
 	
-    </head>
-    <body>
-        <div>
-            <h1><a href="/">Django Girls Blog</a></h1>
-        </div>
+            <div class="date">
+                {{ post.published_date }}
+            </div>
 
-<div class="content container">
-    <div class="row">
-        <div class="col-md-8">
-            {% for post in posts %}
-                <div class="post">
-                    <div class="date">
-                        <p>published: {{ post.published_date }}</p>
-                    </div>
-                    <h2><a href="">{{ post.title }}</a></h2>
-                    <p>{{ post.text|linebreaksbr }}</p>
-                </div>
-            {% endfor %}
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
         </div>
-    </div>
-</div>
-
-    </body>
-</html>
+    {% endfor %}
+{% endblock %}
